@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/
+/Iffco-Malaysia.client/obj/Debug
+/Iffco-Malaysia.Server/bin/Debug/net8.0
+/Iffco-Malaysia.Server/obj
+/Iffco-Malaysia.Server//Iffco-Malaysia.Server.csproj.user
+/node_modules
+/.vs/ProjectEvaluation
+# /mauritius.einvoicing.client/yarn.lock
