@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "Kt/B/7nGKM2vOYyAngZXFv9Lh51rxGzyHmCrBLtscrM=",
+  "Hash": "1w+PcbjJ8oxS7R10mCp2WSiDlwP0K3uJCBChUPEEnp4=",
   "Source": "Iffco.Malaysia.Server",
   "BasePath": "_content/Iffco.Malaysia.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\PC\\Workspace\\IFFCO\\iffco-malaysia\\Iffco.Malaysia.client\\Iffco.Malaysia.client.esproj",
+      "Identity": "E:\\workspace-ashfaq\\dotnet\\iffco-malaysia\\Iffco.Malaysia.client\\Iffco.Malaysia.client.esproj",
       "Version": 2,
       "Source": "Iffco.Malaysia.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

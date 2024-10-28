@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\PC\\Workspace\\IFFCO\\iffco-malaysia\\Iffco.Malaysia.Server\\..\\Iffco.Malaysia.client",
+"WorkingDirectory": "E:\\workspace-ashfaq\\dotnet\\iffco-malaysia\\Iffco.Malaysia.Server\\..\\Iffco.Malaysia.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
