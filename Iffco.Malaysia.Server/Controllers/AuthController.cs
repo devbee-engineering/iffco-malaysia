@@ -15,7 +15,7 @@ namespace Mauritius.EInvoicing.Server.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login(string userName, string password)
+        public IActionResult Login(string? userName, string? password)
         {
             try
             {

@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Mauritius.EInvoicing.Server.Migrations
+namespace Iffco.Malaysia.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class addusers : Migration
+    public partial class initial_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,9 @@ namespace Mauritius.EInvoicing.Server.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsAdmin = table.Column<bool>(type: "bit", nullable: false)
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    IsMfaEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    MfaSecretKey = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

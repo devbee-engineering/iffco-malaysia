@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { RouterName } from "../../constants/Constants";
-import { post } from "../../Services/api";
 import { jwtDecode } from "jwt-decode";
 import { IsAuthenticated, SetJwtToken } from "../../Services/auth";
 import logo from "../../../public/logo.png";
@@ -28,8 +27,8 @@ function SignIn() {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   React.useEffect(() => {
-    if (IsAuthenticated()) {
-      navigate(RouterName.INVOICES);
+      if (IsAuthenticated()) {
+          navigate(RouterName.FILELISTS);
     }
   }, []);
 
@@ -47,28 +46,18 @@ function SignIn() {
         SetJwtToken(response.data);
         const decodedToken = jwtDecode(response.data);
 
-        const deviceId = decodedToken["DeviceId"];
+   
         const userName = decodedToken["unique_name"] ?? decodedToken["nameid"];
         const mfaStatus = decodedToken["MfaStatus"] ?? "false";
 
-        localStorage.setItem("deviceId", deviceId);
+      
         localStorage.setItem("userName", userName);
         localStorage.setItem("mfaStatus", mfaStatus);
           if (mfaStatus === "true") {
               localStorage.setItem("IsMfaOtpVerified", 'false');
              
           }
-        
-        const deviceDetails = await post(`/Device/Get?deviceGuid=${deviceId}`);
-        if (deviceDetails.status === 200) {
-          localStorage.setItem(
-            "deviceDetails",
-            JSON.stringify(deviceDetails.data)
-          );
-          navigate(RouterName.INVOICES);
-        } else {
-          setError(`Unexpected error: ${deviceDetails.status}`);
-        }
+          navigate(RouterName.FILELISTS);
       } else {
         setError(`Unexpected error: ${response.data}`);
       }
@@ -99,7 +88,7 @@ function SignIn() {
           <CardTitle className=" text-center">
             <div>
               <img src={logo} alt="Logo" style={{ width: "50px" }} />
-              <p>MRA E-Invoicing Portal</p>
+              <p>IFFCO - Malaysia Portal</p>
             </div>
           </CardTitle>
           {error && <Alert variant="danger">{error}</Alert>}

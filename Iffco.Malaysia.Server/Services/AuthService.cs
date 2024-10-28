@@ -15,10 +15,14 @@ namespace Mauritius.EInvoicing.Server.Services
 
     [RegisterPerRequest]
 
-    public class AuthService(IUserRepository userRepository, IDeviceRepository deviceRepository) : IAuthService
+    public class AuthService(IUserRepository userRepository) : IAuthService
     {
         public string Login(string userName, string password)
         {
+            if(string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                throw new Exception("Username and password are required");
+            }
             var user = userRepository.GetUserByUserName(userName) ?? throw new Exception("User not found");
 
             var hashedPassword = HashHelper.ComputeSha256Hash(password);
@@ -28,12 +32,10 @@ namespace Mauritius.EInvoicing.Server.Services
                 throw new Exception("Invalid password");
             }
 
-            var device = deviceRepository.GetAll().FirstOrDefault() ?? throw new Exception("No Device Found");
-            
-            return GenerateJwtToken(user, device.DeviceId);
+            return GenerateJwtToken(user);
         }
 
-        private string GenerateJwtToken(User user,Guid deviceId)
+        private string GenerateJwtToken(User user)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -44,7 +46,6 @@ namespace Mauritius.EInvoicing.Server.Services
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.UserName),
                     new Claim(ClaimTypes.Name, user.DisplayName),
-                    new Claim("DeviceId", deviceId.ToString()),
                     new Claim("UserId", user.UserId.ToString()),
                     new Claim("MfaStatus", user.IsMfaEnabled.ToString().ToLower()),
                 }),

@@ -19,30 +19,14 @@ export default defineConfig({
         logLevel: "debug",
         changeOrigin: true,
       },
-      "^/Device/": {
-        target: "http://localhost:5100/",
-        secure: false,
-        logLevel: "debug",
-        changeOrigin: true,
-      },
-      "^/InvoiceRequest/": {
-        target: "http://localhost:5100/",
-        secure: false,
-        logLevel: "debug",
-        changeOrigin: true,
-      },
+     
       "^/Auth/": {
         target: "http://localhost:5100/",
         secure: false,
         logLevel: "debug",
         changeOrigin: true,
       },
-      "^/Party/": {
-        target: "http://localhost:5100/",
-        secure: false,
-        logLevel: "debug",
-        changeOrigin: true,
-      },
+    
       "^/User/": {
         target: "http://localhost:5100/",
         secure: false,
@@ -55,7 +39,7 @@ export default defineConfig({
               logLevel: "debug",
               changeOrigin: true,
           },
-    },
+      },
     port: 5173,
   },
 });

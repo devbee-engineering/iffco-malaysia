@@ -22,10 +22,10 @@ const Sidebar = () => {
           <img src={logo} alt="Logo" style={{ width: "40px" }} />{" "}
         </Navbar.Brand>
         <Nav activeKey={location.pathname} className="mr-auto">
-          <Nav.Link href="/invoices">Invoices</Nav.Link>
-          <Nav.Link href="#" onClick={() => alert("Coming Soon")}>
-            Reports
-          </Nav.Link>
+          {/*<Nav.Link href="/invoices">Invoices</Nav.Link>*/}
+          {/*<Nav.Link href="#" onClick={() => alert("Coming Soon")}>*/}
+          {/*  Reports*/}
+          {/*</Nav.Link>*/}
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           <div style={{ cursor: "pointer" }}>

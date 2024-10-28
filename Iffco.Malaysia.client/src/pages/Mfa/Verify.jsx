@@ -14,7 +14,7 @@ const VerifyOtp = () => {
                 if (res.status === 200) {
                     toast(res.data);
                     localStorage.setItem("IsMfaOtpVerified", 'true');
-                    navigate(RouterName.INVOICES);
+                    navigate(RouterName.DASHBOARD);
                 }
             })
             .catch((error) => {

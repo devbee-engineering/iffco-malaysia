@@ -1,10 +1,9 @@
 export const RouterName = {
   SIGN_IN: "/",
   DASHBOARD: "/dashboard",
-  INVOICES: "/invoices",
-  ON_BOARD: "/onboard",
-  CREATE_INVOICE: "/create-invoice",
-  PRINT_INVOICE: "/print-invoice",
+
+
+  FILELISTS: "/fIleLists",
   CHANGE_PASSWORD: "/changepassword",
   MFA_SETUP: "/mfa-setup",
   VERIFYOTP:"/veryfy-otp"
