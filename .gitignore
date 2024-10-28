@@ -3,6 +3,7 @@
 ################################################################################
 
 /.vs/
+/Iffco.Malaysia.Server/obj/*
 /Iffco-Malaysia.client/obj/Debug
 /Iffco-Malaysia.Server/bin/Debug/net8.0
 /Iffco-Malaysia.Server/obj
