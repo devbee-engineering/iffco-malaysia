@@ -1,4 +1,5 @@
-﻿using Mauritius.EInvoicing.Server.Data.Entities;
+﻿using Iffco.Malaysia.Server.Data.Entities;
+using Mauritius.EInvoicing.Server.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mauritius.EInvoicing.Server.Data
@@ -9,5 +10,7 @@ namespace Mauritius.EInvoicing.Server.Data
         {
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<FileUpload> FileUpload { get; set; }
+
     }
 }

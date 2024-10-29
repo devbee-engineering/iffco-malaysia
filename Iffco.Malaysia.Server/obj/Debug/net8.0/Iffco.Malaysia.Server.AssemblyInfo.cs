@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Iffco.Malaysia.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+451cac75c8ef8fcfcad36b0884a65ee93e23c675")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10f96ee206c75b5ffcce587d1d30cce3f56898e0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Iffco.Malaysia.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Iffco.Malaysia.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
