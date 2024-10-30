@@ -8,7 +8,7 @@ namespace Iffco.Malaysia.Server.Controllers
     [Route("FileUpload")]
     public class FileUploadController(IFileUploadservice fileUploadService) : ControllerBase
     {
-            private readonly IFileUploadservice _fileUploadService = fileUploadService;
+        private readonly IFileUploadservice _fileUploadService = fileUploadService;
 
         [HttpPost]
         [Route("Upload")]
@@ -16,14 +16,7 @@ namespace Iffco.Malaysia.Server.Controllers
         {
             try
             {
-                var uploadedBy = User.FindFirst("sub")?.Value;
-
-                if (string.IsNullOrEmpty(uploadedBy))
-                {
-                    return Unauthorized(new { Message = "User not authenticated." });
-                }
-
-                _fileUploadService.UploadFile(fileUploadRequest, uploadedBy);
+                _fileUploadService.UploadFile(fileUploadRequest);
                 return Ok(new { Message = "File uploaded successfully." });
             }
             catch (ArgumentException err)
