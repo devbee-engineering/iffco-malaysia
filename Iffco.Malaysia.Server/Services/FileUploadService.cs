@@ -1,5 +1,6 @@
 ﻿using Agoda.IoC.Core;
 using Iffco.Malaysia.Server.Contracts;
+using Iffco.Malaysia.Server.Contracts.Response;
 using Iffco.Malaysia.Server.Data;
 using Iffco.Malaysia.Server.Data.Entities;
 using Mauritius.EInvoicing.Server.Services;
@@ -9,6 +10,7 @@ namespace Iffco.Malaysia.Server.Services
     public interface IFileUploadservice
     {
         void UploadFile(FileUploadRequest fileUpload);
+        List<GetAllFilesResponse> GetAllFiles(int page, int limit);
     }
 
     [RegisterPerRequest]
@@ -32,6 +34,18 @@ namespace Iffco.Malaysia.Server.Services
             };
 
             _fileUploadRepository.UploadFile(newFileUpload);
+        }
+
+        public List<GetAllFilesResponse> GetAllFiles(int page, int limit)
+        {
+            var offset = (page - 1) * limit;
+            var response= _fileUploadRepository.GetAllFiles(limit, offset);
+            return response.Select(x => new GetAllFilesResponse
+            {
+                FileName = x.FileName,
+                UploadDate = x.UploadDate,
+                UploadedBy = x.UploadedBy
+            }).ToList();
         }
     }
 }

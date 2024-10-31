@@ -19,10 +19,13 @@ import FileUploadModal from "../filesUpload/FileUploadModal"
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Sidebar from "../SideBar";
+import { get } from "../../Services/api";
+
 
 const FileLists = () => {
   //const navigate = useNavigate();
   const [invoiceLogs,] = useState([]);
+    const [fileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,13 +41,17 @@ const FileLists = () => {
   //const targetRef = useRef();
 
   useEffect(() => {
-    //fetchInvoices();
+    fetchInvoices();
   }, [currentPage]);
 
-  const fetchInvoices = () => {
-    setIsError(false);
-    setIsLoading(true);
-    setIsLoading(false);
+    const fetchInvoices = async() => {
+        setIsError(false);
+        setIsLoading(true);
+        await get("/FileUpload/GetAllFiles?page=" + currentPage)
+        .then((response) => {
+          setFileList(response.data);
+          setIsLoading(false);
+        })
   };
 
   const handleSearch = () => {
@@ -85,13 +92,7 @@ const FileLists = () => {
     window.localStorage.setItem("invoiceData", JSON.stringify(log));
     handleShowModal();
   };
-  //const handlePrint = () => {
-  //  const printWindow = window.frames[0];
-  //  var invData = localStorage.getItem("invoiceData");
-  //  var invoiceDetailJson = JSON.parse(invData);
-  //  window.document.title = invoiceDetailJson.invoiceNumber;
-  //  printWindow.print();
-  //};
+
 
   return (
     <>
@@ -106,28 +107,28 @@ const FileLists = () => {
       >
         <Card.Body>
           <InputGroup className="mb-3">
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={popover}
-              rootClose
-            >
-              <Form.Control
-                type="text"
-                value={`📅  ${dayjs(dateRange.startDate).format(
-                  "YYYY-MM-DD"
-                )} - ${dayjs(dateRange.endDate).format("YYYY-MM-DD")}`}
-                readOnly
-              />
-            </OverlayTrigger>
+            {/*<OverlayTrigger*/}
+            {/*  trigger="click"*/}
+            {/*  placement="bottom"*/}
+            {/*  overlay={popover}*/}
+            {/*  rootClose*/}
+            {/*>*/}
+            {/*  <Form.Control*/}
+            {/*    type="text"*/}
+            {/*    value={`📅  ${dayjs(dateRange.startDate).format(*/}
+            {/*      "YYYY-MM-DD"*/}
+            {/*    )} - ${dayjs(dateRange.endDate).format("YYYY-MM-DD")}`}*/}
+            {/*    readOnly*/}
+            {/*  />*/}
+            {/*</OverlayTrigger>*/}
 
-            <Button
-              variant="primary"
-              className="rounded-end"
-              onClick={() => handleSearch()}
-            >
-              Search
-            </Button>
+            {/*<Button*/}
+            {/*  variant="primary"*/}
+            {/*  className="rounded-end"*/}
+            {/*  onClick={() => handleSearch()}*/}
+            {/*>*/}
+            {/*  Search*/}
+            {/*</Button>*/}
 
             <Button
               variant="primary"
@@ -161,39 +162,12 @@ const FileLists = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {invoiceLogs && invoiceLogs.length > 0 ? (
-                      invoiceLogs.map((log, index) => (
+                    {fileList && fileList.length > 0 ? (
+                      fileList.map((fileData, index) => (
                         <tr key={index}>
-                          <td>
-                            <div className="d-flex justify-content-between">
-                              {log.invoiceNumber}
-                              {log.invoiceType !== "INVOICE" && NoteBadge(log)}
-                            </div>
-                          </td>
-                          <td>{log.buyerName}</td>
-                          <td>
-                            {parseFloat(log.totalAmount).toLocaleString(
-                              "en-US",
-                              {
-                                style: "currency",
-                                currency: log.currency,
-                              }
-                            )}
-                          </td>
-                          <td>
-                            {dayjs(log.createdDateTime).format(
-                              "YYYY-MM-DD HH:mm:ss"
-                            )}
-                          </td>
-                          <td>{log.createdBy}</td>
-                          <td>
-                            <Button
-                              variant="primary"
-                              onClick={() => handleView(log)}
-                            >
-                              View
-                            </Button>
-                          </td>
+                          <td>{fileData.fileName}</td>
+                              <td>{fileData.uploadDate}</td>
+                          <td>{fileData.uploadedBy}</td>
                         </tr>
                       ))
                     ) : (

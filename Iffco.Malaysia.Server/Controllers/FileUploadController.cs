@@ -28,5 +28,20 @@ namespace Iffco.Malaysia.Server.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while uploading the file." });
             }
         }
+
+        [HttpGet]
+        [Route("GetAllFiles")]
+        public IActionResult GetAllFiles([FromQuery] int page=1, [FromQuery] int limit=10)
+        {
+            try
+            {
+                var files = _fileUploadService.GetAllFiles(page, limit);
+                return Ok(files);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Iffco.Malaysia.Server.Data
     public interface IFileUploadRepository
     {
         void UploadFile(FileUpload fileUpload);
+        List<FileUpload> GetAllFiles(int limit, int offset);
     }
     [RegisterPerRequest]
 
@@ -18,6 +19,11 @@ namespace Iffco.Malaysia.Server.Data
         {
             _dbContext.FileUpload.Add(fileUpload);
             _dbContext.SaveChanges();
+        }
+
+        public List<FileUpload> GetAllFiles(int limit, int offset)
+        {
+            return _dbContext.FileUpload.Skip(offset).Take(limit).OrderByDescending(x=>x.Id).ToList();
         }
     }
 }
