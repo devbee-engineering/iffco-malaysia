@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Iffco.Malaysia.Server.props" />
+</Project>

@@ -1,0 +1,3 @@
+C:\Users\PC\Workspace\IFFCO\Iffco.Malaysia.client\obj\Debug\Iffco.Malaysia.client.esproj.CoreCompileInputs.cache
+C:\Users\PC\Workspace\IFFCO\iffco-malaysia\Iffco.Malaysia.client\obj\Debug\Iffco.Malaysia.client.esproj.CoreCompileInputs.cache
+E:\workspace-ashfaq\dotnet\iffco-malaysia\Iffco.Malaysia.client\obj\Debug\Iffco.Malaysia.client.esproj.CoreCompileInputs.cache
