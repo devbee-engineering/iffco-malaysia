@@ -20,7 +20,7 @@ instance.interceptors.response.use(
   }
 );
 
-export async function post(route, data = {}) {
+export async function post (route, data = {}) {
   const response = await instance.post(route, data);
   return response;
 }

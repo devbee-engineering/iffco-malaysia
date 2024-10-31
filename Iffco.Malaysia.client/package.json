@@ -25,7 +25,8 @@
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "superagent": "^9.0.2",
-    "to-words": "^4.0.1"
+    "to-words": "^4.0.1",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

@@ -114,7 +114,6 @@ try
     {
         var db = scope.ServiceProvider.GetRequiredService<Repository>();
         db.Database.Migrate();
-        db.Database.EnsureCreated();
     }
 
 
