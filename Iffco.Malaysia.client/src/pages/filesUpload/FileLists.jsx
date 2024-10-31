@@ -28,7 +28,7 @@ const FileLists = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
     // const [selectedLog, setSelectedLog] = useState(null);
-     const [showModal, setShowModal] = useState(null);
+     const [showModal, setShowModal] = useState(false);
   //const itemsPerPage = 10;
   const [dateRange, setDateRange] = useState({
     startDate: dayjs().startOf("month").toDate(),

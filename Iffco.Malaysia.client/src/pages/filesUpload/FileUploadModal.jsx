@@ -2,12 +2,16 @@ import PropTypes from 'prop-types';
 import { useState } from "react";
 import { RiCloseLargeLine } from "react-icons/ri";
 import { post } from "../../Services/api";
-import Toaster from '../Toaster';
+import { toast } from 'react-toastify';
+
+import { Button, Spinner } from 'react-bootstrap';
 
 
-const FileUploadModal = ({ isOpen, onClose, authToken }) => {
+
+const FileUploadModal = ({ isOpen, onClose }) => {
     const [file, setFile] = useState(null);
     const [base64, setBase64] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleDrop = (event) => {
         event.preventDefault();
@@ -48,12 +52,12 @@ const FileUploadModal = ({ isOpen, onClose, authToken }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+       
         if (!base64) {
-            Toaster('Please select a file to upload.');
+            toast.error('Please select a file to upload.');
             return;
         }
-
+        setIsLoading(true);
         const requestBody = {
             File: base64,
             FileName: file.name,
@@ -61,16 +65,17 @@ const FileUploadModal = ({ isOpen, onClose, authToken }) => {
         };
 
         try {
-            const response = await post('/FileUpload/Upload', requestBody, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`, 
-                },
-            });
-            Toaster(response.data.Message);
-            handleClose();
+            const response = await post('/FileUpload/Upload', requestBody);
+            if (response.status === 200) {
+                toast(response.data.Message);
+                handleClose();
+            } else {
+                toast.error(response.data.Message);
+            }
+           
         } catch (error) {
-            Toaster('Error uploading file: ' + error.message);
+            setIsLoading(true);
+            toast.error('Error uploading file: ' + error.message);
         }
     };
 
@@ -105,7 +110,17 @@ const FileUploadModal = ({ isOpen, onClose, authToken }) => {
                     </div>
                     <div className="modal-footer justify-content-between">
                         <label htmlFor="fileInput" className="btn btn-secondary">Select File</label>
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                        {/*<button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>*/}
+                        <Button variant="primary" onClick={handleSubmit} disabled={isLoading}>
+                            {isLoading ? (
+                                <>
+                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                    Loading...
+                                </>
+                            ) : (
+                                "Submit"
+                            )}
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -115,8 +130,7 @@ const FileUploadModal = ({ isOpen, onClose, authToken }) => {
 
 FileUploadModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    authToken: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired
 };
 
 export default FileUploadModal;
