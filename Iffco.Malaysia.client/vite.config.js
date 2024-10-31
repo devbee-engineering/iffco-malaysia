@@ -39,6 +39,12 @@ export default defineConfig({
               logLevel: "debug",
               changeOrigin: true,
           },
+          "^/FileUpload/": {
+              target: "http://localhost:5100/",
+              secure: false,
+              logLevel: "debug",
+              changeOrigin: true,
+          },
       },
     port: 5173,
   },
