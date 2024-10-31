@@ -1,7 +1,7 @@
 ﻿using Agoda.IoC.Core;
 using Iffco.Malaysia.Server.Contracts;
+using Iffco.Malaysia.Server.Data;
 using Iffco.Malaysia.Server.Data.Entities;
-using Mauritius.EInvoicing.Server.Data;
 using Mauritius.EInvoicing.Server.Services;
 
 namespace Iffco.Malaysia.Server.Services
@@ -10,17 +10,19 @@ namespace Iffco.Malaysia.Server.Services
     {
         void UploadFile(FileUploadRequest fileUpload);
     }
+
     [RegisterPerRequest]
-    public class FileUploadService(IHttpContextService httpContextService, Repository dbContext) : IFileUploadservice
+    public class FileUploadService(IHttpContextService httpContextService, IFileUploadRepository fileUploadRepository) : IFileUploadservice
     {
-        private readonly IHttpContextService httpContextService = httpContextService;
-        private readonly Repository dbContext = dbContext;
+        private readonly IHttpContextService _httpContextService = httpContextService;
+        private readonly IFileUploadRepository _fileUploadRepository = fileUploadRepository;
 
         public void UploadFile(FileUploadRequest fileUpload)
         {
             if (string.IsNullOrWhiteSpace(fileUpload.File))
                 throw new ArgumentException("File is not valid.");
-            var uploadedBy = httpContextService.GetCurrentUserName();
+
+            var uploadedBy = _httpContextService.GetCurrentUserName();
             var newFileUpload = new FileUpload
             {
                 FileName = fileUpload.FileName,
@@ -29,9 +31,7 @@ namespace Iffco.Malaysia.Server.Services
                 File = fileUpload.File,
             };
 
-            dbContext.FileUpload.Add(newFileUpload);
-            dbContext.SaveChanges();
+            _fileUploadRepository.UploadFile(newFileUpload);
         }
-
     }
 }
