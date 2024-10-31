@@ -11,6 +11,7 @@
 /node_modules
 /.vs/ProjectEvaluation
 # /mauritius.einvoicing.client/yarn.lock
+
 /Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.AssemblyInfo.cs
 /Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.AssemblyInfoInputs.cache
 /Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.csproj.CoreCompileInputs.cache
@@ -23,3 +24,4 @@
 /Iffco.Malaysia.Server/obj/Debug/net8.0/ref/Iffco.Malaysia.Server.dll
 /Iffco.Malaysia.Server/obj/Debug/net8.0/refint/Iffco.Malaysia.Server.dll
 /Iffco.Malaysia.Server/obj/Debug/net8.0/apphost.exe
+
