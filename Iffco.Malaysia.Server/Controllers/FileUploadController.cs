@@ -19,13 +19,24 @@ namespace Iffco.Malaysia.Server.Controllers
                 _fileUploadService.UploadFile(fileUploadRequest);
                 return Ok(new { Message = "File uploaded successfully." });
             }
-            catch (ArgumentException err)
+            catch (Exception ex)
             {
-                return BadRequest(new { err.Message });
+                return BadRequest(ex.Message);
             }
-            catch (Exception)
+        }
+
+        [HttpGet]
+        [Route("GetAllFiles")]
+        public IActionResult GetAllFiles([FromQuery] int page=1, [FromQuery] int limit=10)
+        {
+            try
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while uploading the file." });
+                var files = _fileUploadService.GetAllFiles(page, limit);
+                return Ok(files);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

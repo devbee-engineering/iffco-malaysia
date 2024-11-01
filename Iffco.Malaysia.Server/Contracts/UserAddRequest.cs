@@ -1,4 +1,6 @@
-﻿namespace Mauritius.EInvoicing.Server.Contracts
+﻿using Iffco.Malaysia.Server.Contracts.Request;
+
+namespace Mauritius.EInvoicing.Server.Contracts
 {
     public class UserAddRequest
     {
@@ -7,5 +9,7 @@
         public string? Email { get; set; }
         public required string DisplayName { get; set; }
         public bool IsAdmin { get; set; }
+
+        public FtpCredentialRequest? FtpCredential { get; set; }
     }
 }

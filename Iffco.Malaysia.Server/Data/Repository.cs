@@ -11,6 +11,7 @@ namespace Mauritius.EInvoicing.Server.Data
         }
         public DbSet<User> Users { get; set; }
         public DbSet<FileUpload> FileUpload { get; set; }
+        public DbSet<FtpCredential> FtpCredentials { get; set; }
 
 
     }
