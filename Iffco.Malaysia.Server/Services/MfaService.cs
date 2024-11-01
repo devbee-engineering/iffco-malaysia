@@ -1,10 +1,6 @@
 ﻿using Agoda.IoC.Core;
-using Mauritius.EInvoicing.Server.Contracts;
-using Mauritius.EInvoicing.Server.Data;
-using Microsoft.AspNetCore.Identity;
 using OtpNet;
 using QRCoder;
-using System;
 
 namespace Mauritius.EInvoicing.Server.Services
 {
@@ -31,7 +27,7 @@ namespace Mauritius.EInvoicing.Server.Services
             _userService.UpdateMfaSecretKey(user.UserId, secretKey);
             // Provide a QR code URL for the authenticator app
 
-          var uri = $"otpauth://totp/Mra-Einvoice:{user.Email}?secret={secretKey}&issuer=Mra-Einvoice";
+          var uri = $"otpauth://totp/IFFCO-Malaysia:{user.Email}?secret={secretKey}&issuer=IFFCO-Malaysia";
 
             using (var qrGenerator = new QRCodeGenerator())
             {

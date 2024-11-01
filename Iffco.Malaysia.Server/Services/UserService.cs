@@ -28,8 +28,6 @@ namespace Mauritius.EInvoicing.Server.Services
             {
                 throw new Exception("User already exists");
             }
-
-
             var password = HashHelper.ComputeSha256Hash(user.Password);
 
             var userData = new User()
@@ -60,13 +58,10 @@ namespace Mauritius.EInvoicing.Server.Services
         {
             var userName = httpContextService.GetCurrentUserName();
             var user = userRepository.GetUserByUserName(userName);
-
-
             if (user == null)
             {
                 throw new Exception("user context not found, Please login again");
             }
-
             var hashedCurrentPassword = HashHelper.ComputeSha256Hash(currentPassword);
 
             if (user.Password != hashedCurrentPassword)
