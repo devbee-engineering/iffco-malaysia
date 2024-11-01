@@ -1,4 +1,6 @@
 ﻿using Agoda.IoC.Core;
+using Iffco.Malaysia.Server.Data;
+using Iffco.Malaysia.Server.Data.Entities;
 using Mauritius.EInvoicing.Server.Contracts;
 using Mauritius.EInvoicing.Server.Data;
 using Mauritius.EInvoicing.Server.Data.Entities;
@@ -16,7 +18,7 @@ namespace Mauritius.EInvoicing.Server.Services
         bool GetMfaStatusByUserId(int userId);
     }
     [RegisterPerRequest]
-    public class UserService(IUserRepository userRepository, IHttpContextService httpContextService) : IUserService
+    public class UserService(IUserRepository userRepository, IHttpContextService httpContextService,IFtpCredentialRepository ftpCredentialRepository) : IUserService
     {
 
         public void AddUser(UserAddRequest user)
@@ -40,6 +42,18 @@ namespace Mauritius.EInvoicing.Server.Services
             };
 
             userRepository.Add(userData);
+
+            if (user.FtpCredential != null)
+            {
+                var ftpCredential = new FtpCredential()
+                {
+                    Server = user.FtpCredential.Server,
+                    Username = user.FtpCredential.UserName,
+                    Password = user.FtpCredential.Password,
+                    UserId = userData.UserId
+                };
+                ftpCredentialRepository.InsertFtpCredential(ftpCredential);
+            }
         }
 
         public void UpdatePassword(string currentPassword, string newPassword)

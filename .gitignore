@@ -25,3 +25,7 @@
 /Iffco.Malaysia.Server/obj/Debug/net8.0/refint/Iffco.Malaysia.Server.dll
 /Iffco.Malaysia.Server/obj/Debug/net8.0/apphost.exe
 
+/Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.assets.cache
+/Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.csproj.AssemblyReference.cache
+/Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.csproj.FileListAbsolute.txt
+*.dll

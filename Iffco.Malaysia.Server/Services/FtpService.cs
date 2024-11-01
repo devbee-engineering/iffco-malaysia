@@ -12,7 +12,7 @@ namespace Iffco.Malaysia.Server.Services
     [RegisterPerRequest]
     public class FtpService : IFtpService
     {
-        private readonly string _ftpServer= "ftp://ftp.localhost";
+        private readonly string _ftpServer= "ftp://localhost";
         private readonly string _username="PC";
         private readonly string _password="musthak";
         //public FtpService()
