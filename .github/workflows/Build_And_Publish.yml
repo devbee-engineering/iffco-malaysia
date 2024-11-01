@@ -1,0 +1,45 @@
+name: Build and Publish 
+
+on:
+  workflow_dispatch:
+    inputs:
+      app-version:
+        description: "version"
+        default: "v1.0.1"  
+
+jobs:
+  mra-einvoice:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get the Git tag name
+        id: tag_name
+        run: echo "::set-output name=TAG_NAME::$(echo $GITHUB_REF | cut -d '/' -f 3)"
+
+      - name: IFFCO Malaysia
+        run: |
+          docker login ghcr.io -u musthakdevbee -p ${{ secrets.GIT_PAT }}
+          docker build . -t ghcr.io/devbee-engineering/iffco-malaysia:${{ github.event.inputs.app-version }} -f ./Dockerfile
+          docker push ghcr.io/devbee-engineering/iffco-malaysia:${{ github.event.inputs.app-version }}
+          
+  Send-notification:
+    runs-on: ubuntu-latest
+    needs: [mra-einvoice]
+
+    steps:
+      - name: Get the Git tag name
+        id: tag_name
+        run: echo "::set-output name=TAG_NAME::$(echo $GITHUB_REF | cut -d '/' -f 3)"
+
+      - name: publish complete notification
+        if: success()
+        run: |
+          curl --location 'https://hooks.slack.com/services/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' --header 'Content-type: application/json' --data '{ "text": ":github: Prepared Release Package - ${{ github.event.inputs.app-version }} for IFFCO Malaysia"}'
+
+      - name: publish failure notification
+        if: failure()
+        run: |
+          curl --location 'https://hooks.slack.com/services/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' --header 'Content-type: application/json' --data '{ "text": ":boom:  Publish pipeline failed for IFFCO Malaysia"}'
