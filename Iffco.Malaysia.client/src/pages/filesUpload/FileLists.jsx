@@ -6,15 +6,9 @@ import {
   Spinner,
   Form,
   InputGroup,
-  OverlayTrigger,
-  Popover,
-  Badge,
-  Tooltip,
 } from "react-bootstrap";
-//import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
-//import { RouterName } from "../../constants/Constants";
-import { DateRangePicker } from "react-date-range";
+//import dayjs from "dayjs";
+//import { DateRangePicker } from "react-date-range";
 import FileUploadModal from "../filesUpload/FileUploadModal"
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -24,7 +18,6 @@ import { get } from "../../Services/api";
 
 const FileLists = () => {
   //const navigate = useNavigate();
-  const [invoiceLogs,] = useState([]);
     const [fileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -33,18 +26,18 @@ const FileLists = () => {
     // const [selectedLog, setSelectedLog] = useState(null);
      const [showModal, setShowModal] = useState(false);
   //const itemsPerPage = 10;
-  const [dateRange, setDateRange] = useState({
-    startDate: dayjs().startOf("month").toDate(),
-    endDate: dayjs().endOf("month").toDate(),
-    key: "selection",
-  });
+  //const [dateRange, setDateRange] = useState({
+  //  startDate: dayjs().startOf("month").toDate(),
+  //  endDate: dayjs().endOf("month").toDate(),
+  //  key: "selection",
+  //});
   //const targetRef = useRef();
 
   useEffect(() => {
-    fetchInvoices();
+      fetchFiles();
   }, [currentPage]);
 
-    const fetchInvoices = async() => {
+    const fetchFiles = async() => {
         setIsError(false);
         setIsLoading(true);
         await get("/FileUpload/GetAllFiles?page=" + currentPage)
@@ -54,45 +47,21 @@ const FileLists = () => {
         })
   };
 
-  const handleSearch = () => {
-    setCurrentPage(1);
-    fetchInvoices();
-  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const handleShowModal = () => {
-    setShowModal(true);
-    };
 
   const handleCloseModal = () => {
     setShowModal(false);
   };
 
-  const handleDateRangeSelect = (ranges) => {
-    var startDate = ranges.selection.startDate;
-    var endDate = ranges.selection.endDate;
-    setDateRange({ startDate, endDate, key: "selection" });
-  };
-
-  const popover = (
-    <Popover id="popover-basic" style={{ minWidth: " 580px" }}>
-      <Popover.Body>
-        <DateRangePicker
-          ranges={[dateRange]}
-          onChange={handleDateRangeSelect}
-        />
-      </Popover.Body>
-    </Popover>
-  );
-
-  const handleView = (log) => {
-    window.localStorage.setItem("invoiceData", JSON.stringify(log));
-    handleShowModal();
-  };
-
+  //const handleDateRangeSelect = (ranges) => {
+  //  var startDate = ranges.selection.startDate;
+  //  var endDate = ranges.selection.endDate;
+  //  setDateRange({ startDate, endDate, key: "selection" });
+  //};
 
   return (
     <>
@@ -215,33 +184,10 @@ const FileLists = () => {
           </>
         </Card.Body>
           </Card>
-          <FileUploadModal isOpen={showModal} onClose={handleCloseModal} />
+          <FileUploadModal isOpen={showModal} onClose={handleCloseModal} fetchFiles={fetchFiles} />
 
     </>
   );
-
-  function NoteBadge(log) {
-    let noteType = log.invoiceType === "CREDIT_NOTE" ? "CN" : "DN";
-    let noteTypeLabel =
-      log.invoiceType === "CREDIT_NOTE" ? "Credit Note" : "Debit Note";
-
-    return (
-      <OverlayTrigger
-        key="top"
-        placement="bottom"
-        overlay={
-          <Tooltip id={`tooltip-top`}>
-            {noteTypeLabel} for Invoice Number{" : "}
-            {log.invoiceReferenceNumber} , Reason : {log.noteReason}
-          </Tooltip>
-        }
-      >
-        <Badge pill bg="secondary">
-          {noteType}
-        </Badge>
-      </OverlayTrigger>
-    );
-  }
 };
 
 export default FileLists;

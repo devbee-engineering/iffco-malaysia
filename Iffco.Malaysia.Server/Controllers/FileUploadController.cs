@@ -19,13 +19,9 @@ namespace Iffco.Malaysia.Server.Controllers
                 _fileUploadService.UploadFile(fileUploadRequest);
                 return Ok(new { Message = "File uploaded successfully." });
             }
-            catch (ArgumentException err)
+            catch (Exception ex)
             {
-                return BadRequest(new { err.Message });
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while uploading the file." });
+                return BadRequest(ex.Message);
             }
         }
 

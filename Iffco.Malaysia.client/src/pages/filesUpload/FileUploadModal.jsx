@@ -8,7 +8,7 @@ import { Button, Spinner } from 'react-bootstrap';
 
 
 
-const FileUploadModal = ({ isOpen, onClose }) => {
+const FileUploadModal = ({ isOpen, onClose, fetchFiles }) => {
     const [file, setFile] = useState(null);
     const [base64, setBase64] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +33,10 @@ const FileUploadModal = ({ isOpen, onClose }) => {
     const convertToBase64 = (file) => {
         const reader = new FileReader();
         reader.onloadend = () => {
-            setBase64(reader.result)
-            //console.log(reader.result)
-
-        }
-        reader.readAsDataURL(file)
+            setBase64(reader.result.split(',')[1]);
+        };
+        reader.readAsDataURL(file);
     };
-
     const handleClose = () => {
         setFile(null);
         setBase64(null);
@@ -67,15 +64,18 @@ const FileUploadModal = ({ isOpen, onClose }) => {
         try {
             const response = await post('/FileUpload/Upload', requestBody);
             if (response.status === 200) {
-                toast(response.data.Message);
+                toast(response.data.message);
                 handleClose();
+                setIsLoading(false);
+                fetchFiles();
             } else {
-                toast.error(response.data.Message);
+                toast.error(response.data);
+               
             }
            
         } catch (error) {
-            setIsLoading(true);
-            toast.error('Error uploading file: ' + error.message);
+            setIsLoading(false);
+            toast.error('Error uploading file: ' + error.response.data);
         }
     };
 
@@ -130,7 +130,8 @@ const FileUploadModal = ({ isOpen, onClose }) => {
 
 FileUploadModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    fetchFiles: PropTypes.func.isRequired
 };
 
 export default FileUploadModal;

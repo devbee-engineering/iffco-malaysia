@@ -3,6 +3,7 @@ using Iffco.Malaysia.Server.Contracts;
 using Iffco.Malaysia.Server.Contracts.Response;
 using Iffco.Malaysia.Server.Data;
 using Iffco.Malaysia.Server.Data.Entities;
+using Iffco.Malaysia.Server.Enums;
 using Mauritius.EInvoicing.Server.Services;
 
 namespace Iffco.Malaysia.Server.Services
@@ -14,10 +15,11 @@ namespace Iffco.Malaysia.Server.Services
     }
 
     [RegisterPerRequest]
-    public class FileUploadService(IHttpContextService httpContextService, IFileUploadRepository fileUploadRepository) : IFileUploadservice
+    public class FileUploadService(IHttpContextService httpContextService, IFileUploadRepository fileUploadRepository, IFtpService ftpService) : IFileUploadservice
     {
         private readonly IHttpContextService _httpContextService = httpContextService;
         private readonly IFileUploadRepository _fileUploadRepository = fileUploadRepository;
+        private readonly IFtpService _ftpService = ftpService;
 
         public void UploadFile(FileUploadRequest fileUpload)
         {
@@ -31,9 +33,14 @@ namespace Iffco.Malaysia.Server.Services
                 UploadDate = DateTime.UtcNow,
                 UploadedBy = uploadedBy,
                 File = fileUpload.File,
+                UploadStatus = FileUploadStatusValue.Pending
             };
+            _fileUploadRepository.InsertFileInfo(newFileUpload);
+            _ftpService.UploadBase64File(fileUpload.File, fileUpload.FileName);
 
-            _fileUploadRepository.UploadFile(newFileUpload);
+            newFileUpload.UploadStatus = FileUploadStatusValue.Completed;
+            newFileUpload.File =null;
+            _fileUploadRepository.UpdateFileInfo(newFileUpload);
         }
 
         public List<GetAllFilesResponse> GetAllFiles(int page, int limit)
@@ -42,6 +49,7 @@ namespace Iffco.Malaysia.Server.Services
             var response= _fileUploadRepository.GetAllFiles(limit, offset);
             return response.Select(x => new GetAllFilesResponse
             {
+                Id=x.Id,
                 FileName = x.FileName,
                 UploadDate = x.UploadDate,
                 UploadedBy = x.UploadedBy
