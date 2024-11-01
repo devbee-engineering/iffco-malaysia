@@ -27,6 +27,7 @@ namespace Iffco.Malaysia.Server.Services
                 throw new ArgumentException("File is not valid.");
 
             var uploadedBy = _httpContextService.GetCurrentUserName();
+            var currentUserId = _httpContextService.GetCurrentUserId();
             var newFileUpload = new FileUpload
             {
                 FileName = fileUpload.FileName,
@@ -36,7 +37,7 @@ namespace Iffco.Malaysia.Server.Services
                 UploadStatus = FileUploadStatusValue.Pending
             };
             _fileUploadRepository.InsertFileInfo(newFileUpload);
-            _ftpService.UploadBase64File(fileUpload.File, fileUpload.FileName);
+            _ftpService.UploadBase64File(fileUpload.File, fileUpload.FileName, int.Parse(currentUserId));
 
             newFileUpload.UploadStatus = FileUploadStatusValue.Completed;
             newFileUpload.File =null;
