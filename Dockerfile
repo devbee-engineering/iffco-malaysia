@@ -4,12 +4,12 @@ FROM node:20 AS frontend-build
 WORKDIR /app
 
 # Copy frontend dependencies
-COPY mauritius.einvoicing.client/package.json mauritius.einvoicing.client/yarn.lock ./
+COPY Iffco.Malaysia.client/package.json Iffco.Malaysia.client/yarn.lock ./
 RUN yarn install
 RUN yarn add date-fns
 RUN yarn add react-otp-input
 # Copy and build the frontend application
-COPY mauritius.einvoicing.client .
+COPY Iffco.Malaysia.client .
 RUN yarn build
 
 
@@ -19,16 +19,16 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS backend-build
 WORKDIR /app
 
 # Copy and restore backend dependencies
-COPY Mauritius.EInvoicing.Server/Mauritius.EInvoicing.Server.csproj Mauritius.EInvoicing.Server/
+COPY Iffco.Malaysia.Server/Iffco.Malaysia.Server.csproj Iffco.Malaysia.Server/
 
-RUN dotnet restore Mauritius.EInvoicing.Server/Mauritius.EInvoicing.Server.csproj
+RUN dotnet restore Iffco.Malaysia.Server/Iffco.Malaysia.Server.csproj
 
 # Copy the rest of the backend code
-COPY Mauritius.EInvoicing.Server Mauritius.EInvoicing.Server
+COPY Iffco.Malaysia.Server Iffco.Malaysia.Server
 
 
 # Publish the backend application
-RUN dotnet publish Mauritius.EInvoicing.Server/Mauritius.EInvoicing.Server.csproj -c Release -o /app/publish
+RUN dotnet publish Iffco.Malaysia.Server/Iffco.Malaysia.Server.csproj -c Release -o /app/publish
 
 # Stage 3: Final image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
@@ -41,4 +41,4 @@ EXPOSE 5173
 COPY --from=frontend-build /app/dist wwwroot/
 COPY --from=backend-build /app/publish .
 
-ENTRYPOINT ["dotnet", "Mauritius.EInvoicing.Server.dll"]
+ENTRYPOINT ["dotnet", "Iffco.Malaysia.Server.dll"]
