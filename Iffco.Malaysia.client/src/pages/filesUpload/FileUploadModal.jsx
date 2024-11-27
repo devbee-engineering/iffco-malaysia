@@ -68,15 +68,18 @@ const FileUploadModal = ({ isOpen, onClose, fetchFiles }) => {
                 handleClose();
                 setIsLoading(false);
                 fetchFiles();
+               
             } else {
                 toast.error(response.data);
-               
+                fetchFiles();
             }
            
         } catch (error) {
             setIsLoading(false);
             toast.error('Error uploading file: ' + error.response.data);
+            fetchFiles();
         }
+       
     };
 
 
