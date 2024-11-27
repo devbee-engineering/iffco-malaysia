@@ -29,3 +29,7 @@
 /Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.csproj.AssemblyReference.cache
 /Iffco.Malaysia.Server/obj/Debug/net8.0/Iffco.Malaysia.Server.csproj.FileListAbsolute.txt
 *.dll
+/Iffco.Malaysia.Server/bin/Debug/net8.0/Iffco.Malaysia.Server.staticwebassets.endpoints.json
+/Iffco.Malaysia.Server/bin/Debug/net8.0/Microsoft.AspNetCore.SpaProxy.dll
+/Iffco.Malaysia.Server/obj/Debug/net8.0/staticwebassets/msbuild.build.Iffco.Malaysia.Server.props
+/Iffco.Malaysia.Server/obj/Iffco.Malaysia.Server.csproj.nuget.g.targets

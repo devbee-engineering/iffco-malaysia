@@ -18,20 +18,13 @@ import { get } from "../../Services/api";
 
 const FileLists = () => {
   //const navigate = useNavigate();
-    const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-    // const [selectedLog, setSelectedLog] = useState(null);
-     const [showModal, setShowModal] = useState(false);
-  //const itemsPerPage = 10;
-  //const [dateRange, setDateRange] = useState({
-  //  startDate: dayjs().startOf("month").toDate(),
-  //  endDate: dayjs().endOf("month").toDate(),
-  //  key: "selection",
-  //});
-  //const targetRef = useRef();
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
       fetchFiles();
@@ -57,11 +50,6 @@ const FileLists = () => {
     setShowModal(false);
   };
 
-  //const handleDateRangeSelect = (ranges) => {
-  //  var startDate = ranges.selection.startDate;
-  //  var endDate = ranges.selection.endDate;
-  //  setDateRange({ startDate, endDate, key: "selection" });
-  //};
 
   return (
     <>
@@ -128,6 +116,7 @@ const FileLists = () => {
                       <th>File Name</th>
                       <th>Date</th>
                       <th>Uploaded By</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -137,6 +126,7 @@ const FileLists = () => {
                           <td>{fileData.fileName}</td>
                               <td>{fileData.uploadDate}</td>
                           <td>{fileData.uploadedBy}</td>
+                              <td>{fileData.status}</td>
                         </tr>
                       ))
                     ) : (

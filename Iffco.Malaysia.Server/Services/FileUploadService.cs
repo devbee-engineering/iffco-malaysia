@@ -37,11 +37,19 @@ namespace Iffco.Malaysia.Server.Services
                 UploadStatus = FileUploadStatusValue.Pending
             };
             _fileUploadRepository.InsertFileInfo(newFileUpload);
-            _ftpService.UploadBase64File(fileUpload.File, fileUpload.FileName, int.Parse(currentUserId));
 
-            newFileUpload.UploadStatus = FileUploadStatusValue.Completed;
-            newFileUpload.File =null;
-            _fileUploadRepository.UpdateFileInfo(newFileUpload);
+            try
+            {
+               _ftpService.UploadBase64File(fileUpload.File, fileUpload.FileName, int.Parse(currentUserId));
+                newFileUpload.UploadStatus = FileUploadStatusValue.Completed;
+                newFileUpload.File = null;
+                _fileUploadRepository.UpdateFileInfo(newFileUpload);
+            }
+            catch (Exception ex) {
+                newFileUpload.UploadStatus = FileUploadStatusValue.Failed;
+                _fileUploadRepository.UpdateFileInfo(newFileUpload);
+                throw;
+            }
         }
 
         public List<GetAllFilesResponse> GetAllFiles(int page, int limit)
@@ -53,7 +61,8 @@ namespace Iffco.Malaysia.Server.Services
                 Id=x.Id,
                 FileName = x.FileName,
                 UploadDate = x.UploadDate,
-                UploadedBy = x.UploadedBy
+                UploadedBy = x.UploadedBy,
+                Status=x.UploadStatus.ToString()
             }).ToList();
         }
     }
